@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
@@ -14,23 +15,20 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+
+        return PostResource::collection(Post::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+ 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StorePostRequest $request)
     {
         //
+        $validated = $request->validated(); 
+        $post = Post::create($validated);
+        return PostResource::make($post);
     }
 
     /**
@@ -39,6 +37,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        return PostResource::make($post);
     }
 
     /**
