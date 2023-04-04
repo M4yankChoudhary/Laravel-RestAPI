@@ -41,19 +41,13 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $validate = $request->validated();
+        $post->update($validate);
+        return PostResource::make($post); 
     }
 
     /**
